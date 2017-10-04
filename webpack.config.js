@@ -62,9 +62,9 @@ const config = {
 			},
 			{
 				test: /\.(png|jpg|gif|eot|ttf|woff|woff2|svg|svgz)$/,
-				use: [{
+				use: {
 					loader: "url-loader"
-				}]
+				}
 			}
 		]
 	},

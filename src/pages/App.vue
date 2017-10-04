@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="app">
 		<router-view></router-view>
 	</div>
 </template>
@@ -29,7 +29,10 @@
 		font-family: "Droid Sans", "Droid Sans Fallback";
 		font-size: 62.5%;
 	}
-
-
-
+	div {
+		box-sizing: border-box;
+	}
+	img {
+		border: 0;
+	}
 </style>

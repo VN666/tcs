@@ -1,13 +1,21 @@
-import login from "../pages/login"
+import login from "../pages/login";
+import index from "../pages/index";
+import test from "../pages/test";
+
 const routers = [
 	{
 		path: "",
 		redirect: "/home"
 	},
 	{
-		name: "login",
+		name: "index",
 		path: "/home",
-		component: login
+		component: index
+	},
+	{
+		name: "test",
+		path: "/test",
+		component: test
 	}
 ];
 
