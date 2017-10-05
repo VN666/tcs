@@ -1,7 +1,6 @@
 import login from "../pages/login";
 import index from "../pages/index";
-import test from "../pages/test";
-
+import organization from "../pages/organization"
 const routers = [
 	{
 		path: "",
@@ -13,9 +12,9 @@ const routers = [
 		component: index
 	},
 	{
-		name: "test",
-		path: "/test",
-		component: test
+		name: "organization",
+		path: "/organization",
+		component: organization
 	}
 ];
 

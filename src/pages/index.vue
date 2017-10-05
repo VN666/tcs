@@ -35,12 +35,12 @@
 				<div class="app">
 					<p>其他</p>
 					<ul>
-						<li><i class="iconfont icon-6"></i><div>用户管理</div></li>
-						<li><i class="iconfont icon-activity"></i><div>日志管理</div></li>
-						<li><i class="iconfont icon-zuzhiguanli1"></i><div>组织管理</div></li>
-						<li><i class="iconfont icon-ziyuanguanli"></i><div>资源管理</div></li>
-						<li><i class="iconfont icon-quanxianguanli2"></i><div>权限管理</div></li>
-						<li><i class="iconfont icon-bangzhuzhongxin"></i><div>帮助中心</div></li>
+						<li @click="goPage(1)"><i class="iconfont icon-6"></i><div>用户管理</div></li>
+						<li dataType="2"><i class="iconfont icon-activity"></i><div>日志管理</div></li>
+						<li dataType="3"><i class="iconfont icon-zuzhiguanli1"></i><div>组织管理</div></li>
+						<li dataType="4"><i class="iconfont icon-ziyuanguanli"></i><div>资源管理</div></li>
+						<li dataType="5"><i class="iconfont icon-quanxianguanli2"></i><div>权限管理</div></li>
+						<li dataType="6"><i class="iconfont icon-bangzhuzhongxin"></i><div>帮助中心</div></li>
 					</ul>
 				</div>
 			</div>
@@ -89,6 +89,15 @@
 			},
 			userAreaContentUnShow: function () {
 				this.iconShow = false;
+			},
+			goPage: function (type) {
+				switch (type) {
+					case 1: 
+						this.$router.push({path: '/organization'});
+						break;
+					default:
+
+				}
 			}
 		}
 	}
@@ -111,6 +120,7 @@
 	} 
 	.index .using-right .notice .notice-content, .index .using-right .download .download-content {
 		width: 100%;
+		margin-top: 10px;
 		height: 170px;
 		padding: 10px;
 		background: linear-gradient(to bottom right, #5b90ed, #5a90ec);
