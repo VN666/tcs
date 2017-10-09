@@ -15,9 +15,9 @@
 						<i class="iconfont icon-set"></i>
 						<span>系统管理</span>
 						<i class="iconfont icon-moreunfold" v-if="!iconShow" @mouseenter="userAreaContentShow"></i>
-						<i class="iconfont icon-less" v-if="iconShow"></i>
+						<i class="iconfont icon-less" v-if="iconShow" @mouseleave="userAreaContentUnShow"></i>
 					</div>
-					<div class="user-area-content" v-if="iconShow" @mouseleave="userAreaContentUnShow">
+					<div class="user-area-content" v-if="iconShow" @mouseenter="userAreaContentShow" @mouseleave="userAreaContentUnShow">
 						<div><span>修改密码</span></div>
 						<div><span>退出系统</span></div>
 					</div>
@@ -88,6 +88,7 @@
 				this.iconShow = true;
 			},
 			userAreaContentUnShow: function () {
+				console.log(1);
 				this.iconShow = false;
 			},
 			goPage: function (type) {

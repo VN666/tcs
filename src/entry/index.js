@@ -6,8 +6,7 @@ import ElementUI from "element-ui"
 import "element-ui/lib/theme-default/index.css"
 import "../asset/css/iconFont.css"
 import ztree from "ztree";
-
-//import "@vendor/pluginns/css/zTreeStyle/zTreeStyle.css"
+import "@/vendor/plugins/zTreeStyle/zTreeStyle.css"
 import Mock from "@/mock/mock.js"
 
 Vue.use(VueRouter);
