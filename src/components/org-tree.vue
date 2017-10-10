@@ -11,16 +11,60 @@
 		</div>
 		<div class="tree-search">
 			<div>
-				<input type="text" />
+				<input v-model="searchValue" type="text" />
 				<ul>
-					<li><i class="iconfont icon-icon"></i></li>
-					<li><i class="iconfont icon-sousuo"></i></li>
+					<li @click="goClear"><i class="iconfont icon-icon"></i></li>
+					<li @click="goSearch"><i class="iconfont icon-sousuo"></i></li>
 				</ul>
 			</div>
 		</div>
 		<div class="tree-content">
 			<div id="ztree" class="ztree"></div>
 		</div>
+		<el-dialog title="添加" :visible.sync="dialogVisible" size="tiny">
+			<el-form ref="ruleForm" :model="form" :rules="rules" label-width="80px" class="demo-ruleForm">
+				<el-form-item label="添加类型" prop="type">
+					<el-radio-group v-model="form.type">
+						<el-radio label="0">组织</el-radio>
+						<el-radio label="1">监控区域</el-radio>
+					</el-radio-group>
+				</el-form-item>
+				<el-form-item label="上级组织">
+					<el-input v-model="form.parentName" :disabled="true"></el-input>
+				</el-form-item>
+				<el-form-item label="组织名称" prop="name">
+					<el-input v-model="form.name"></el-input>
+				</el-form-item>
+				<el-form-item label="组织编码">
+					<el-input v-model="form.code" :disabled="true"></el-input>
+				</el-form-item>
+			</el-form>
+  			<span class="dialog-footer" slot="footer">
+    			<el-button @click="dialogVisible=false">取 消</el-button>
+    			<el-button type="primary" @click="submitForm('ruleForm', 0)" >确 定</el-button>
+  			</span>
+		</el-dialog>
+		<el-dialog title="修改" :visible.sync="dialogVisible2" size="tiny">
+			<el-form ref="ruleForm2" :model="form2" :rules="rules" label-width="80px" class="demo-ruleForm">
+				<el-form-item label="添加类型" prop="type">
+					<el-radio disabled v-model="form2.type" label="组织">组织</el-radio>
+					<el-radio disabled v-model="form2.type" label="监控区域">监控区域</el-radio>
+				</el-form-item>
+				<el-form-item label="上级组织">
+					<el-input v-model="form2.parentName" :disabled="true"></el-input>
+				</el-form-item>
+				<el-form-item label="组织名称" prop="name">
+					<el-input v-model="form2.name"></el-input>
+				</el-form-item>
+				<el-form-item label="组织编码">
+					<el-input v-model="form2.code" :disabled="true"></el-input>
+				</el-form-item>
+			</el-form>
+  			<span class="dialog-footer" slot="footer">
+    			<el-button @click="dialogVisible2=false">取 消</el-button>
+    			<el-button type="primary" @click="submitForm('ruleForm2', 1)" >确 定</el-button>
+  			</span>
+		</el-dialog>
 	</div>
 </template>
 
@@ -31,36 +75,177 @@
 		data () {
 			return {
 				treeObj: "",
+				currentTreeNode: "",
 				setting: {
 					async: {
 						enable: true,
-						url: "localhost:3000",
+						url: "localhost:3000//ccc",
 						autoParam: ['id'],
 						type: "post"
 					},
-					check: { enable: false },
+					check: { enable: true },
 					callback: { 
 						onClick: this.zTreeeOnClick
 					}
+				},
+				dialogVisible: false,
+				dialogVisible2: false,
+				searchValue: "",
+				form: {
+					type: "",
+					parentName: "",
+					name: "",
+					code: ""
+				},
+				form2: {
+					type: '',
+					parentName: "",
+					name: '',
+					code: '',
+				},
+				rules: {
+					type: [
+						{ required: true, message: '请选择至少一个类型', trigger: 'blur'}
+					],
+					name: [
+						{ required: true, message: '不能为空', trigger: 'change'}
+					]
 				}
 			}
 		},
 		methods: {
 			update: function () {
-				
-			},
-			add: function () {},
-			modify: function () {},
-			del: function () {}
-		}
-		mounted () {
-			axios.post("localhost:3000//tcs/organization/asynFirstGetZTree").then(
-				res => {
-					this.treeObj = $.fn.zTree.init($('#ztree'), this.setting, res.data)
+				axios.post("http://10.6.135.106:8081/organization/asynGetZTree").then(
+					res => {
+						this.treeObj = $.fn.zTree.init($('#ztree'), this.setting, res.data);
 				})
 				.catch(function (err) {
 					console.log(err);
+				});
+			},
+			add: function () { 
+				if(this.currentTreeNode.length === 0){
+					alert("请选择添加的节点")
+				} else {
+					this.dialogVisible = true;
+					if(this.currentTreeNode.id != 0)
+						this.form.parentName = this.currentTreeNode.getParentNode().name;
+					else 
+						this.form.parentName = "此节点是根节点";
+					this.form.code = this.createCode();
+				}
+			},
+			modify: function () {
+				if(this.currentTreeNode.length === 0){
+					alert("请选择添加的节点")
+				} else {
+					this.form2.type = this.currentTreeNode.type == 0 ? '组织' : '监控区域';
+					this.form2.name = this.currentTreeNode.name;
+					this.form2.code = this.currentTreeNode.code;
+					if(this.currentTreeNode.id != 0)
+						this.form2.parentName = this.currentTreeNode.getParentNode().name;
+					else
+						this.form2.parentName = "此节点是根节点";
+					this.dialogVisible2 = true;
+				}
+			},
+			del: function () {
+				if(this.currentTreeNode.length === 0) {
+					alert('请选择删除的节点');
+				} else {
+					let that = this;
+					axios.post("http://10.6.135.106:8081/tcs/organization/delZTreeOrg",{
+						id: that.currentTreeNode.id
+					}).then(
+						res => {
+							if(res.data === 0) {
+								alert('删除成功');
+							} else {
+								alert('服务异常，删除失败');
+							}
+					})
+					.catch(function (err) {
+						console.log(err);
+					});
+				}
+			},
+			zTreeeOnClick: function (e, treeId, treeNode) {
+				this.currentTreeNode = treeNode;
+			},
+			createCode: function () {
+				let x = "QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm";
+				let tmp = "";
+				let timestamp = new Date().getTime();
+				for(let i = 0; i < 3; i++)  {
+					tmp  +=  x.charAt(Math.ceil(Math.random()*100000000)%x.length);
+				}
+				return tmp + timestamp;
+			},
+			submitForm: function (formName, flag) {
+				let that = this;
+				this.$refs[formName].validate((valid) => {
+					if(valid) {
+						if(flag == 0){
+							axios.post("http://10.6.135.106:8081/organization/addZTreeOrg", {
+								name: that.form.name,
+								parentId: that.currentTreeNode.id,
+								code: that.form.code,
+								type: that.form.type
+							}).then(
+								res => {
+									if(res.data === 0) {
+										that.dialogVisible = false,
+										that.treeObj.addNodes(that.currentTreeNode, res.data.newNode,true);
+									} else if(res.data === 1) {
+										that.dialogVisible = false,
+										alert('重复添加组织或监控区域');
+									} else {
+										that.dialogVisible = false,
+										alert('添加失败');
+									}
+							})
+							.catch(function (err) {
+								console.log(err);
+							});
+						} else if(flag == 1) {
+							axios.post("http://10.6.135.106:8081/organization/updateZTreeOrg", {
+								id: that.currentTreeNode.id,
+								name: that.form2.name
+							}).then(
+								res => {
+									if(res.data === 0){
+										that.dialogVisible2 = false;
+										that.currentTreeNode.name = that.form2.name;
+										that.treeObj.updataNode(that.currentTreeNode);	
+									} else {
+										alert('修改失败');
+									}
+							})
+							.catch(function (err) {
+								console.log(err);
+							});
+						}
+					} else {}
+				});
+			},
+			goSearch: function () {
+				let that = this;
+				axios.post("http://10.6.135.106:8081/organization/getOrganizationListByName", {
+					name: that.searchValue,
+				}).then(
+					res => {
+						that.treeObj = $.fn.zTree.init($('#ztree'), this.setting, res.data);
 				})
+				.catch(function (err) {
+					console.log(err);
+				});
+			},
+			goClear: function () {
+				this.searchValue = "";
+			}
+		},
+		mounted () {
+			this.update();
 		}
 	}
 </script>
@@ -69,6 +254,22 @@
 		height: 100%;
 		width: 252px;
 		border-right: 1px solid #99bbe8;
+	}
+	.org-tree .el-dialog__header {
+		background: #0099FF;
+		height: 40px;
+		line-height: 43px;
+		padding: 0 10px;
+	}
+	.org-tree .el-dialog__header .el-dialog__title {
+		color: #fff;
+		line-height: 0;
+	}
+	.org-tree .el-dialog__header .el-dialog__headerbtn {
+		margin-top: 12px;
+	}
+	.org-tree .el-dialog__header .el-dialog__headerbtn i {
+		color: #fff;
 	}
 	.org-tree .tree-content {
 		width: 100%;

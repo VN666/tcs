@@ -18,7 +18,7 @@ const config = {
 		"vendor": ['vue', 'vue-router', 'jquery', 'ztree']
 	},
 	output: {
-		path: DEBUG ? path.resolve(__dirname, '.resources') : path.resolve(__dirname, './dist/resources'),
+		path: DEBUG ? path.resolve(__dirname, 'resources') : path.resolve(__dirname, './dist/resources'),
 		filename: "[name].js"
 	},
 	resolve: {
@@ -75,7 +75,6 @@ const config = {
 			names:['vendor']
 		}),
 		new extractTextPlugin('style.css'),
-		new cleanWebpackPlugin([]),
 		new webpack.ProvidePlugin({$: 'jquery', 'jQuery': 'jquery', 'window.jQuery': 'jquery'})
 	]
 }
