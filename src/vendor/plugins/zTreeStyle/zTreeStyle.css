@@ -70,20 +70,28 @@ website:	http://code.google.com/p/jquerytree/
 .ztree li span.button.bottom_docu{background-position:-56px -36px}
 .ztree li span.button.noline_docu{ background:none;}
 
-.ztree li span.button.diy01_ico_open{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
-.ztree li span.button.diy01_ico_close{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
-.ztree li span.button.diy01_ico_docu{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.organization_ico_open{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.organization_ico_close{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.organization_ico_docu{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
 .ztree li span.button.edit {margin-right:2px; background-position:-110px -48px; vertical-align:top; *vertical-align:middle}
 .ztree li span.button.remove {margin-right:2px; background-position:-110px -64px; vertical-align:top; *vertical-align:middle}
 
-.ztree li span.button.diy03_ico_open{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
-.ztree li span.button.diy03_ico_close{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
-.ztree li span.button.diy03_ico_docu{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.monitoringArea_ico_open{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.monitoringArea_ico_close{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.monitoringArea_ico_docu{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
 
+.ztree li span.button.mp_ico_open{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.mp_ico_close{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.mp_ico_docu{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
 
 .ztree li span.button.ico_loading{margin-right:2px; background:url(./img/loading.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
 
 ul.tmpTargetzTree {background-color:#FFE6B0; opacity:0.8; filter:alpha(opacity=80)}
+
+.ztree li span.button.dv_ico_open{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.dv_ico_close{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.dv_ico_docu{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
+
 
 span.tmpzTreeMove_arrow {width:16px; height:16px; display: inline-block; padding:0; margin:2px 0 0 1px; border:0 none; position:absolute;
 	background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;
@@ -100,3 +108,11 @@ ul.ztree.zTreeDragUL {margin:0; padding:0; position:absolute; width:auto; height
 	padding:0;
 	background:none;
 }*/
+
+.ztree li span.button.a1_ico_open{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.a1_ico_close{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.a1_ico_docu{background-image:url('./img/diy01.png'); vertical-align:top; *vertical-align:middle}
+
+.ztree li span.button.a2_ico_open{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.a2_ico_close{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}
+.ztree li span.button.a2_ico_docu{background-image:url('./img/diy03.png'); vertical-align:top; *vertical-align:middle}

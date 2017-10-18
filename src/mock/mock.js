@@ -1,4 +1,4 @@
-import Mock from "mockjs";
+/*import Mock from "mockjs";
 
 Mock.mock(
 	"localhost:3000//tcs/organization/asynFirstGetZTree",
@@ -247,4 +247,4 @@ Mock.mock(
 			"code": "489safsa"
 		}
 	);
-export default Mock;
+export default Mock;*/

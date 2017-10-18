@@ -79,11 +79,11 @@
 				setting: {
 					async: {
 						enable: true,
-						url: "localhost:3000//ccc",
+						url: "http://10.6.133.13:8081/organization/asynGetZTree",
 						autoParam: ['id'],
 						type: "post"
 					},
-					check: { enable: true },
+					check: { enable: false },
 					callback: { 
 						onClick: this.zTreeeOnClick
 					}
@@ -115,20 +115,33 @@
 		},
 		methods: {
 			update: function () {
-				axios.post("http://10.6.135.106:8081/organization/asynGetZTree").then(
+				let that = this;
+				axios({
+					method: "post",
+					url: "http://10.6.133.13:8081/organization/asynGetZTree"
+				})
+				.then(
 					res => {
 						this.treeObj = $.fn.zTree.init($('#ztree'), this.setting, res.data);
+						let nodes = this.treeObj.getNodes();
+						this.treeObj.selectNode(nodes[0]);
+						this.currentTreeNode = nodes[0];
+						this.$emit('node', this.currentTreeNode);
 				})
 				.catch(function (err) {
 					console.log(err);
 				});
 			},
 			add: function () { 
+				this.form.type = "";
+				this.form.parentName = "";
+				this.form.name = "";
+				this.form.parentName = "";
 				if(this.currentTreeNode.length === 0){
 					alert("请选择添加的节点")
 				} else {
 					this.dialogVisible = true;
-					if(this.currentTreeNode.id != 0)
+					if(this.currentTreeNode.id != 1)
 						this.form.parentName = this.currentTreeNode.getParentNode().name;
 					else 
 						this.form.parentName = "此节点是根节点";
@@ -139,41 +152,56 @@
 				if(this.currentTreeNode.length === 0){
 					alert("请选择添加的节点")
 				} else {
-					this.form2.type = this.currentTreeNode.type == 0 ? '组织' : '监控区域';
+					this.form2.type = this.currentTreeNode.iconSkin == 'organization' ? '组织' : '监控区域';
 					this.form2.name = this.currentTreeNode.name;
 					this.form2.code = this.currentTreeNode.code;
-					if(this.currentTreeNode.id != 0)
+					if(this.currentTreeNode.id == 1)
+						alert('不能对此几点进行修改操作');
+					else {
 						this.form2.parentName = this.currentTreeNode.getParentNode().name;
-					else
-						this.form2.parentName = "此节点是根节点";
-					this.dialogVisible2 = true;
+						this.dialogVisible2 = true;
+					}
 				}
 			},
 			del: function () {
 				if(this.currentTreeNode.length === 0) {
 					alert('请选择删除的节点');
 				} else {
-					let that = this;
-					axios.post("http://10.6.135.106:8081/tcs/organization/delZTreeOrg",{
-						id: that.currentTreeNode.id
-					}).then(
-						res => {
-							if(res.data === 0) {
-								alert('删除成功');
-							} else {
-								alert('服务异常，删除失败');
+					if(this.currentTreeNode.id == 1) 
+						alert('不能对此节点进行删除操作');
+					else {
+						let that = this;
+						axios({
+							method: "post",
+							url: "http://10.6.133.13:8081/organization/delZTreeOrg",
+							params: { 
+								id: that.currentTreeNode.id 
 							}
-					})
-					.catch(function (err) {
-						console.log(err);
-					});
+						})
+						.then(
+							res => {
+								if(res.data.state === 0) {
+									that.treeObj.removeNode(that.currentTreeNode);
+									alert('删除成功');
+									that.currentTreeNode = "";
+								} else if(res.data.state === 1){
+									alert('请先删除该节点下的所有子节点');
+								} else {
+									alert('服务异常，删除失败');
+								}
+						})
+						.catch(function (err) {
+							console.log(err);
+						});
+					}
 				}
 			},
 			zTreeeOnClick: function (e, treeId, treeNode) {
 				this.currentTreeNode = treeNode;
+				this.$emit('node', this.currentTreeNode);
 			},
 			createCode: function () {
-				let x = "QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm";
+				let x = "0123456789";
 				let tmp = "";
 				let timestamp = new Date().getTime();
 				for(let i = 0; i < 3; i++)  {
@@ -186,17 +214,23 @@
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
 						if(flag == 0){
-							axios.post("http://10.6.135.106:8081/organization/addZTreeOrg", {
-								name: that.form.name,
-								parentId: that.currentTreeNode.id,
-								code: that.form.code,
-								type: that.form.type
-							}).then(
+							axios({
+								method: "post",
+								url: "http://10.6.133.13:8081/organization/addZTreeOrg",
+								params: {
+									name: that.form.name,
+									parentId: that.currentTreeNode.id,
+									code: that.form.code,
+									type: that.form.type
+								}
+							})
+							.then(
 								res => {
-									if(res.data === 0) {
-										that.dialogVisible = false,
-										that.treeObj.addNodes(that.currentTreeNode, res.data.newNode,true);
-									} else if(res.data === 1) {
+									if(res.data.state === 0) {
+										alert('添加成功');
+										that.dialogVisible = false;
+										that.treeObj.addNodes(that.currentTreeNode, res.data.newNode, false);
+									} else if(res.data.state === 1) {
 										that.dialogVisible = false,
 										alert('重复添加组织或监控区域');
 									} else {
@@ -208,15 +242,24 @@
 								console.log(err);
 							});
 						} else if(flag == 1) {
-							axios.post("http://10.6.135.106:8081/organization/updateZTreeOrg", {
-								id: that.currentTreeNode.id,
-								name: that.form2.name
-							}).then(
+							axios({
+								method: "post",
+								url: "http://10.6.133.13:8081/organization/updateZTreeOrg",
+								params: {
+									id: that.currentTreeNode.id,
+									name: that.form2.name,
+									type: that.currentTreeNode.iconSkin == 'organization' ? 0 : 1,
+									code: that.currentTreeNode.code,
+									parentId: that.currentTreeNode.parentId
+								}
+							})
+							.then(
 								res => {
-									if(res.data === 0){
+									if(res.data.state === 0){
+										alert('修改成功');
 										that.dialogVisible2 = false;
 										that.currentTreeNode.name = that.form2.name;
-										that.treeObj.updataNode(that.currentTreeNode);	
+										that.treeObj.updateNode(that.currentTreeNode);	
 									} else {
 										alert('修改失败');
 									}
@@ -230,9 +273,14 @@
 			},
 			goSearch: function () {
 				let that = this;
-				axios.post("http://10.6.135.106:8081/organization/getOrganizationListByName", {
-					name: that.searchValue,
-				}).then(
+				axios({
+					method: "post",
+					url: "http://10.6.133.13:8081/organization/getOrganizationListByName",
+					params: {
+						name: that.searchValue
+					}
+				})
+				.then(
 					res => {
 						that.treeObj = $.fn.zTree.init($('#ztree'), this.setting, res.data);
 				})
@@ -246,14 +294,17 @@
 		},
 		mounted () {
 			this.update();
+			/*let nodes = this.treeObj;
+			console.log(nodes);
+			this.treeObj.selectNode(nodes[0]);*/
 		}
 	}
 </script>
 <style type="text/css">
 	.org-tree {
 		height: 100%;
-		width: 252px;
-		border-right: 1px solid #99bbe8;
+		width: 100%;
+		border-right: 3px solid #99bbe8;
 	}
 	.org-tree .el-dialog__header {
 		background: #0099FF;
@@ -319,7 +370,7 @@
 	.org-tree .tree-header {
 		width: 100%;
 		height: 30px;
-		background: linear-gradient(to bottom, #DAE6F4, #D0DEF0)
+		background: linear-gradient(to bottom, #DAE6F4, #D0DEF0);
 	}
 	.org-tree .tree-header span {
 		color: #15428b;
