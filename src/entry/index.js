@@ -8,7 +8,8 @@ import "../asset/css/iconFont.css"
 import ztree from "ztree";
 import "@/vendor/plugins/zTreeStyle/zTreeStyle.css"
 import Mock from "@/mock/mock.js"
-
+import axios from "axios"
+axios.defaults.withCredentials = true;
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 var router = new VueRouter({

@@ -83,13 +83,11 @@
 				delIdArray: [],
 				addNodeArray: [],
 				subNodeArray: [],
-				typeName: 'sfjsaf',
-				pixelName: 'sadk'
+				typeName: '',
+				pixelName: ''
 			}
 		},
 		methods: {
-			test: function () {
-			},
 			goClear: function () {
 				this.searchValue = "";
 				this.requestList();
@@ -163,7 +161,6 @@
 			handleSelectionChange: function (val, row) {
 				this.multipleSelection = val;
 			},
-
 			handleCurrentChange: function (val) {
 				this.page.currentPage = val;
 				this.requestList();

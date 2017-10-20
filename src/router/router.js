@@ -2,6 +2,7 @@ import login from "../pages/login";
 import index from "../pages/index";
 import organization from "../pages/organization"
 import administrator from "../pages/administrator"
+import login1 from "../pages/login"
 const routers = [
 	{
 		path: "",
@@ -15,7 +16,7 @@ const routers = [
 	{
 		name: "organization",
 		path: "/organization",
-		component: organization
+		component: login1
 	},
 	{
 		name: "administrator",

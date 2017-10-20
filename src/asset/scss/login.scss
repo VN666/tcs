@@ -1,0 +1,230 @@
+body {
+    background-color: #1d75de;
+    /*  // background: -webkit-linear-gradient(left, #1d75de, #549df6, #6db4ff, #549df6, #1d75de);
+    // background: -webkit-linear-gradient(left, #6db4ff, #549df6, #1d75de, #549df6, #6db4ff); */
+}
+
+#login {
+    color: #fff;
+    .head {
+        width: 500px;
+        margin-left: 20%;
+        margin-top: 50px;
+        * {
+            vertical-align: middle;
+        }
+        .logo {
+            height: 70px;
+            width: 70px;
+        }
+        .title {
+            display: inline;
+            font-family: 'Microsoft YaHei';
+            font-size: 42px;
+        }
+    }
+    .cover {
+        margin-top: 150px;
+        height: 480px;
+        width: 100%;
+        float: left;
+        // border: solid 1px red;
+        background-repeat: repeat-x;
+        border-radius: 35px;
+        overflow: hidden;
+        position: relative;
+        &:after {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 5px;
+            box-shadow: 0 0 300px 40px rgba(29, 117, 222, 1) inset;
+            //  box-shadow: 0 0 300px 40px rgba(255, 255, 255, 1) outset;
+        }
+    }
+    .sun {
+        height: 300px;
+        width: 300px;
+        float: left;
+        background: radial-gradient(circle 60px at 150px 150px, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+        // border: 1px solid red;
+        z-index: 1;
+        position: relative;
+        margin: -800px 7%;
+        .line {
+            height: 250px;
+            width: 1px;
+            position: absolute;
+            top: 150px;
+            left: 150px;
+            background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.6)0, rgba(255, 255, 255, 0)100%);
+            transform-origin: top;
+        }
+    }
+    .halo {
+        height: 300px;
+        width: 500px;
+        // border: 1px solid red;
+        left: 15%;
+        top: 200px;
+        float: left;
+        position: absolute;
+        background-image: -webkit-radial-gradient(circle contain, rgba(251, 181, 249, 0.2) 36px, rgba(251, 181, 249, 0.3) 38px, transparent 40px), -webkit-radial-gradient(circle contain, rgba(251, 181, 249, 0.2) 16px, rgba(251, 181, 249, 0.3) 17px, transparent 20px), -webkit-radial-gradient(circle contain, rgba(251, 181, 249, 0.2) 16px, rgba(251, 181, 249, 0.3) 17px, transparent 20px), -webkit-radial-gradient(circle contain, rgba(221, 251, 243, 0.2) 38px, rgba(221, 251, 243, 0.3) 41px, transparent 46px), -webkit-radial-gradient(circle contain, rgba(221, 251, 243, 0) 20px, rgba(221, 251, 243, 0.2) 38px, transparent 55px), -webkit-radial-gradient(circle contain, rgba(221, 251, 243, 0) 30px, rgba(221, 251, 243, 0.1) 60px, transparent 40px), -webkit-radial-gradient(circle contain, rgba(252, 254, 218, 0.2) 30px, rgba(252, 254, 218, 0.3) 34px, transparent 50px), -webkit-radial-gradient(circle contain, rgba(252, 254, 218, 0.2) 16px, rgba(252, 254, 218, 0.3) 17px, transparent 20px), -webkit-radial-gradient(circle contain, rgba(252, 254, 218, 0.2) 26px, rgba(252, 254, 218, 0.3) 27px, transparent 30px), -webkit-radial-gradient(circle contain, rgba(252, 254, 218, 0.2) 36px, rgba(252, 254, 218, 0.3) 37px, transparent 40px), -webkit-radial-gradient(circle contain, rgba(255, 255, 244, 0.1) 30px, rgba(255, 255, 244, 0.1) 34px, transparent 50px), -webkit-radial-gradient(circle contain, rgba(255, 255, 244, 0.2) 16px, rgba(255, 255, 244, 0.3) 17px, transparent 20px), -webkit-radial-gradient(circle contain, rgba(255, 255, 244, 0.2) 26px, rgba(255, 255, 244, 0.3) 27px, transparent 30px), -webkit-radial-gradient(circle contain, rgba(255, 255, 244, 0.2) 36px, rgba(255, 255, 244, 0.3) 37px, transparent 40px);
+        background-position: 40px 5px, 80px -70px, 10px -40px, 50px -50px, 20px -80px, 100px 90px, -50px -60px, -60px -20px, -80px -80px, -160px -30px, 20px -30px, 130px -60px, 180px -40px, 180px 0px;
+    }
+    .logInfo {
+        position: absolute;
+        // width: 15%;
+        width: 400px;
+        height: 500px;
+        // border: solid 1px red;
+        float: right;
+        right: 17%;
+        top: 230px;
+        .logTitle {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .detailInfo {
+            height: 420px;
+            border-radius: 5px;
+            background: #fff;
+            position: relative;
+            padding: 15px 0;
+            .infoList {
+                width: 80%;
+                // border: solid 1px red;
+                margin: 0 auto;
+                .tip {
+                    color: red;
+                }
+                .tipHid {
+                    visibility: hidden;
+                }
+                input,
+                button {
+                    margin-bottom: 20px;
+                    margin: 15px 0;
+                    height: 45px;
+                }
+                .name,
+                .pwd {
+                    margin-top: 25px;
+                    margin-bottom: 25px;
+                    border: solid 1px #cdcdcd;
+                    border-radius: 5px;
+                    i {
+                        color: #bfbfbf;
+                        height: 30px;
+                        width: 30px;
+                        margin-top: 10px;
+                        font-size: 25px;
+                        &.prepend {
+                            float: left;
+                            margin-left: 10px;
+                        }
+                        &.append {
+                            float: right;
+                            margin-right: 5px;
+                        }
+                        &.append:hover {
+                            color: #8a8a8a;
+                        }
+                    }
+                    input {
+                        margin: 0;
+                        margin-left: 5px;
+                        padding: 0;
+                        width: 220px;
+                        border: 0px;
+                        font-size: 14px;
+                    }
+                }
+                .nameBorder {
+                    border: solid 1px red;
+                }
+                .pwdBorder {
+                    border: solid 1px red;
+                }
+                .nameActive,
+                .pwdActive {
+                    border: solid 1px #6db4ff;
+                    // border: solid 1px #20a0ff;
+                    i {
+                        &.prepend {
+                            color: #6db4ff;
+                            // color: #20a0ff;
+                        }
+                    }
+                }
+                .nameHid,
+                .pwdHid {
+                    i {
+                        &.append {
+                            display: none;
+                        }
+                    }
+                }
+                .remember {
+                    margin: 10px 0;
+                }
+                .is-checked {
+                    color: red;
+                    background: #fff;
+                }
+                .captchaHid {
+                    display: none;
+                }
+                .captchaList {
+                    // display: none;
+                    margin: 25px 0 15px 0;
+                    * {
+                        vertical-align: text-bottom;
+                    }
+                    .captcha {
+                        display: inline-block;
+                        border: solid 1px #cdcdcd;
+                        border-radius: 5px;
+                        padding: 10px;
+                        font-size: 14px;
+                        width: 40%;
+                        margin: 0;
+                    }
+                    img {
+                        border-radius: 5px;
+                        height: 40px;
+                        width: 100px;
+                        margin: 0;
+                        margin-left: 15%;
+                        margin-right: 5%;
+                        cursor: pointer;
+                    }
+                    .captchaBorder {
+                        border: solid 1px red;
+                    }
+                    .captchaActive {
+                        border: solid 1px #6db4ff;
+                    }
+                    .iconfont {
+                        display: inline-block;
+                        height: 20px;
+                        width: 20px;
+                        font-size: 20px;
+                        cursor: pointer;
+                        color: #8a8a8a;
+                    }
+                }
+                button {
+                    display: block;
+                    width: 100%;
+                }
+            }
+        }
+        .detailShort {
+            height: 350px;
+        }
+    }
+}
